@@ -29,6 +29,7 @@ target/
 # Gradle files
 .gradle/
 build/
+!gradle/wrapper/gradle-wrapper.jar
 
 # ignore thumbnails created by Windows
 Thumbs.db
