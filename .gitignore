@@ -1,0 +1,41 @@
+# compiled class files
+*.class
+
+# package files
+*.jar
+*.war
+*.ear
+
+# Eclipse files
+.project
+.classpath
+.factorypath
+.faces-config.xml.jsfdia
+.settings/
+.metadata/
+bin/
+
+# Intellij-IDEA files
+*.iml
+.idea/
+out/
+
+# Netbeans files
+nbactions.xml
+
+# Maven files
+target/
+
+# Gradle files
+.gradle/
+build/
+
+# ignore thumbnails created by Windows
+Thumbs.db
+
+# backup files
+*~
+*.bak
+
+# log files
+*.log
