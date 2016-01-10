@@ -44,8 +44,16 @@ public class FakeAuctionServer {
         return itemId;
     }
 
+    public void reportPrice(int price, int increment, String bidder) {
+        throw new UnsupportedOperationException();
+    }
+
     public void hasReceivedJoinRequestFromSniper() throws InterruptedException {
         messageListener.receivesAMessage();
+    }
+
+    public void hasReceivedBid(int bid, String sniperId) {
+        throw new UnsupportedOperationException();
     }
 
     public void announceClosed() throws XMPPException {
