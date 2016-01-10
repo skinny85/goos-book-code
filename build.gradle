@@ -8,8 +8,12 @@ repositories {
 }
 
 dependencies {
+    compile 'org.igniterealtime.smack:smack:3.1.0'
+    compile 'org.igniterealtime.smack:smackx:3.1.0'
+
     testCompile 'junit:junit:4.11'
     testCompile 'org.hamcrest:hamcrest-library:1.2'
     testCompile 'org.jmock:jmock-junit4:2.6.0'
     testCompile 'org.jmock:jmock-legacy:2.6.0'
+    testCompile 'com.googlecode.windowlicker:windowlicker-swing:r268'
 }
