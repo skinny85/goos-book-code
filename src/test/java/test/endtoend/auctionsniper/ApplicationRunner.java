@@ -1,6 +1,7 @@
 package test.endtoend.auctionsniper;
 
 import auctionsniper.Main;
+import auctionsniper.ui.MainWindow;
 
 import static auctionsniper.Main.STATUS_JOINING;
 import static test.endtoend.auctionsniper.FakeAuctionServer.XMPP_HOSTNAME;
@@ -28,7 +29,7 @@ public class ApplicationRunner {
     }
     
     public void showsSniperHasLostAuction() {
-        driver.showsSniperStatus(Main.STATUS_LOST);
+        driver.showsSniperStatus(MainWindow.STATUS_LOST);
     }
     
     public void stop() {
