@@ -8,5 +8,8 @@ repositories {
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.11'
+    testCompile 'junit:junit:4.11'
+    testCompile 'org.hamcrest:hamcrest-library:1.2'
+    testCompile 'org.jmock:jmock-junit4:2.6.0'
+    testCompile 'org.jmock:jmock-legacy:2.6.0'
 }
