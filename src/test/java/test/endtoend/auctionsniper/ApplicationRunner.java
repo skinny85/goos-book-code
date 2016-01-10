@@ -28,13 +28,13 @@ public class ApplicationRunner {
         driver = new AuctionSniperDriver(1000);
         driver.showsSniperStatus(STATUS_JOINING);
     }
-    
+
     public void showsSniperHasLostAuction() {
         driver.showsSniperStatus(MainWindow.STATUS_LOST);
     }
 
     public void hasShownSniperIsBidding() {
-        throw new UnsupportedOperationException();
+        driver.showsSniperStatus(MainWindow.STATUS_BIDDING);
     }
 
     public void stop() {
