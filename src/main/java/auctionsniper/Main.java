@@ -11,7 +11,7 @@ import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class Main implements AuctionEventListener {
+public class Main implements SniperListener {
     public static final String STATUS_JOINING = "Joining";
     public static final String MAIN_WINDOW_NAME = "Auction Sniper Main";
 
@@ -70,23 +70,18 @@ public class Main implements AuctionEventListener {
 
         Chat chat = connection.getChatManager().createChat(
                 auctionId(itemId, connection),
-                new AuctionMessageTranslator(this));
+                new AuctionMessageTranslator(new AuctionSniper(this)));
         this.notToBeGCd = chat;
         chat.sendMessage(JOIN_COMMAND_FORMAT);
     }
 
     @Override
-    public void auctionClosed() {
+    public void sniperLost() {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 ui.showStatus(MainWindow.STATUS_LOST);
             }
         });
-    }
-
-    @Override
-    public void currentPrice(int price, int increment) {
-        throw new UnsupportedOperationException();
     }
 
     private void disconnectWhenUICloses(final XMPPConnection connection) {
