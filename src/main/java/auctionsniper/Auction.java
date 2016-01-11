@@ -1,5 +1,5 @@
 package auctionsniper;
 
 public interface Auction {
-    void bid(int price);
+    void bid(int amount);
 }
