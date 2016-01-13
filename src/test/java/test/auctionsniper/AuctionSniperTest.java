@@ -1,6 +1,7 @@
 package test.auctionsniper;
 
 import auctionsniper.Auction;
+import auctionsniper.AuctionEventListener.PriceSource;
 import auctionsniper.AuctionSniper;
 import auctionsniper.SniperListener;
 import org.jmock.Expectations;
@@ -36,6 +37,6 @@ public class AuctionSniperTest {
             atLeast(1).of(sniperListener).sniperBidding();
         }});
 
-        sniper.currentPrice(price, increment);
+        sniper.currentPrice(price, increment, PriceSource.FromOtherBidder);
     }
 }
