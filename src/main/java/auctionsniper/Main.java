@@ -97,6 +97,10 @@ public class Main{
             showStatus(MainWindow.STATUS_LOST);
         }
 
+        @Override
+        public void sniperWinning() {
+        }
+
         private void showStatus(final String status) {
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
