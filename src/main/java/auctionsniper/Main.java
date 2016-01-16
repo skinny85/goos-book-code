@@ -99,10 +99,12 @@ public class Main{
 
         @Override
         public void sniperWinning() {
+            showStatus(MainWindow.STATUS_WINNING);
         }
 
         @Override
         public void sniperWon() {
+            showStatus(MainWindow.STATUS_WON);
         }
 
         private void showStatus(final String status) {
