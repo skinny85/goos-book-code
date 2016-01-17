@@ -8,11 +8,11 @@ public enum Column {
     LAST_BID,
     SNIPER_STATE;
 
-    public static Column at(int offset) {
-        return values()[offset];
-    }
-
     public Object valueIn(SniperSnapshot snapshot) {
         throw new UnsupportedOperationException();
+    }
+
+    public static Column at(int offset) {
+        return values()[offset];
     }
 }
