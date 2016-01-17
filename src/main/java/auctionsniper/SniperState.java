@@ -6,4 +6,8 @@ public enum SniperState {
     WINNING,
     LOST,
     WON;
+
+    public SniperState whenAuctionClosed() {
+        throw new UnsupportedOperationException();
+    }
 }
