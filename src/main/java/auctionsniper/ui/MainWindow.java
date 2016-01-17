@@ -49,6 +49,10 @@ public class MainWindow extends JFrame {
     }
 
     public static class SnipersTableModel extends AbstractTableModel {
+        private static String[] STATUS_TEXT = {
+                MainWindow.STATUS_JOINING,
+                MainWindow.STATUS_BIDDING
+        };
         private final static SniperSnapshot STARTING_UP = new SniperSnapshot("", 0, 0, BIDDING);
 
         private String statusText = STATUS_JOINING;
@@ -62,7 +66,7 @@ public class MainWindow extends JFrame {
         public void sniperStatusChanged(SniperSnapshot newSniperSnapshot,
                                         String newStatusText) {
             sniperSnapshot = newSniperSnapshot;
-            statusText = newStatusText;
+            statusText = STATUS_TEXT[newSniperSnapshot.state.ordinal()];
             fireTableRowsUpdated(0, 0);
         }
 
