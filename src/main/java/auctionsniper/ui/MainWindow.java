@@ -11,6 +11,7 @@ import java.awt.*;
 import static auctionsniper.SniperState.JOINING;
 
 public class MainWindow extends JFrame {
+    public static final String APPLICATION_TITLE = "Auction Sniper";
     public static final String MAIN_WINDOW_NAME = "Auction Sniper Main";
     private static final String SNIPERS_TABLE_NAME = "Snipers Table";
 
