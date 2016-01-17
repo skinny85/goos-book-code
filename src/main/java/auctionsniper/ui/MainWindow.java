@@ -28,10 +28,6 @@ public class MainWindow extends JFrame {
         setVisible(true);
     }
 
-    public void showStatus(String statusText) {
-        snipers.setStatusText(statusText);
-    }
-
     public void sniperStatusChanged(SniperSnapshot sniperSnapshot) {
         snipers.sniperStatusChanged(sniperSnapshot);
     }
@@ -58,11 +54,6 @@ public class MainWindow extends JFrame {
 
         private String statusText = STATUS_JOINING;
         private SniperSnapshot sniperSnapshot = STARTING_UP;
-
-        public void setStatusText(String newStatusText) {
-            statusText = newStatusText;
-            fireTableRowsUpdated(0, 0);
-        }
 
         public void sniperStatusChanged(SniperSnapshot newSniperSnapshot) {
             sniperSnapshot = newSniperSnapshot;
