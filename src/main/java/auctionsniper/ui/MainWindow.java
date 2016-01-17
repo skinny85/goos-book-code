@@ -60,18 +60,7 @@ public class MainWindow extends JFrame {
         }
 
         public Object getValueAt(int rowIndex, int columnIndex) {
-            switch (Column.at(columnIndex)) {
-                case ITEM_IDENTIFIER:
-                    return sniperSnapshot.itemId;
-                case LAST_PRICE:
-                    return sniperSnapshot.lastPrice;
-                case LAST_BID:
-                    return sniperSnapshot.lastBid;
-                case SNIPER_STATE:
-                    return textFor(sniperSnapshot.state);
-                default:
-                    throw new IllegalArgumentException("No column at " + columnIndex);
-            }
+            return Column.at(columnIndex).valueIn(sniperSnapshot);
         }
 
         public static String textFor(SniperState state) {
