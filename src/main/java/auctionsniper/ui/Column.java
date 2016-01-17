@@ -1,5 +1,7 @@
 package auctionsniper.ui;
 
+import auctionsniper.SniperSnapshot;
+
 public enum Column {
     ITEM_IDENTIFIER,
     LAST_PRICE,
@@ -8,5 +10,9 @@ public enum Column {
 
     public static Column at(int offset) {
         return values()[offset];
+    }
+
+    public Object valueIn(SniperSnapshot snapshot) {
+        throw new UnsupportedOperationException();
     }
 }
