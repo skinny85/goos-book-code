@@ -1,21 +1,17 @@
 package auctionsniper.ui;
 
 import auctionsniper.SniperSnapshot;
+import auctionsniper.SniperState;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.awt.*;
 
-import static auctionsniper.SniperState.BIDDING;
+import static auctionsniper.SniperState.JOINING;
 
 public class MainWindow extends JFrame {
     public static final String MAIN_WINDOW_NAME = "Auction Sniper Main";
-    public static final String STATUS_JOINING = "Joining";
     private static final String SNIPERS_TABLE_NAME = "Snipers Table";
-    public static final String STATUS_LOST = "Lost";
-    public static final String STATUS_BIDDING = "Bidding";
-    public static final String STATUS_WINNING = "Winning";
-    public static final String STATUS_WON = "Won";
 
     private final SnipersTableModel snipers = new SnipersTableModel();
 
@@ -45,21 +41,13 @@ public class MainWindow extends JFrame {
     }
 
     public static class SnipersTableModel extends AbstractTableModel {
-        private static String[] STATUS_TEXT = {
-                MainWindow.STATUS_JOINING,
-                MainWindow.STATUS_BIDDING,
-                MainWindow.STATUS_WINNING,
-                MainWindow.STATUS_LOST,
-                MainWindow.STATUS_WON
-        };
-        private final static SniperSnapshot STARTING_UP = new SniperSnapshot("", 0, 0, BIDDING);
+        private static String[] STATUS_TEXT = {"Joining", "Bidding", "Winning", "Lost", "Won"};
+        private final static SniperSnapshot STARTING_UP = new SniperSnapshot("", 0, 0, JOINING);
 
-        private String statusText = STATUS_JOINING;
         private SniperSnapshot sniperSnapshot = STARTING_UP;
 
         public void sniperStatusChanged(SniperSnapshot newSniperSnapshot) {
             sniperSnapshot = newSniperSnapshot;
-            statusText = STATUS_TEXT[newSniperSnapshot.state.ordinal()];
             fireTableRowsUpdated(0, 0);
         }
 
@@ -80,10 +68,14 @@ public class MainWindow extends JFrame {
                 case LAST_BID:
                     return sniperSnapshot.lastBid;
                 case SNIPER_STATE:
-                    return statusText;
+                    return textFor(sniperSnapshot.state);
                 default:
                     throw new IllegalArgumentException("No column at " + columnIndex);
             }
+        }
+
+        public static String textFor(SniperState state) {
+            return STATUS_TEXT[state.ordinal()];
         }
     }
 }
