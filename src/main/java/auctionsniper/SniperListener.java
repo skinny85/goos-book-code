@@ -3,7 +3,7 @@ package auctionsniper;
 public interface SniperListener {
     void sniperLost();
 
-    void sniperBidding();
+    void sniperBidding(SniperState sniperState);
 
     void sniperWinning();
 
