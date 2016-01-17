@@ -51,7 +51,8 @@ public class MainWindow extends JFrame {
     public static class SnipersTableModel extends AbstractTableModel {
         private static String[] STATUS_TEXT = {
                 MainWindow.STATUS_JOINING,
-                MainWindow.STATUS_BIDDING
+                MainWindow.STATUS_BIDDING,
+                MainWindow.STATUS_WINNING
         };
         private final static SniperSnapshot STARTING_UP = new SniperSnapshot("", 0, 0, BIDDING);
 
