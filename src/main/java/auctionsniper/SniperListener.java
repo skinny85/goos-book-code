@@ -5,7 +5,5 @@ public interface SniperListener {
 
     void sniperStateChanged(SniperSnapshot sniperSnapshot);
 
-    void sniperWinning();
-
     void sniperWon();
 }
