@@ -1,9 +1,8 @@
 package test.auctionsniper.ui;
 
 import auctionsniper.SniperSnapshot;
-import auctionsniper.SniperState;
 import auctionsniper.ui.Column;
-import auctionsniper.ui.MainWindow;
+import auctionsniper.ui.MainWindow.SnipersTableModel;
 import org.hamcrest.Matcher;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
@@ -15,16 +14,15 @@ import org.junit.runner.RunWith;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.samePropertyValuesAs;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import static auctionsniper.SniperState.BIDDING;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.*;
 
 @RunWith(JMock.class)
 public class SnipersTableModelTest {
     private final Mockery context = new Mockery();
     private TableModelListener listener = context.mock(TableModelListener.class);
-    private final MainWindow.SnipersTableModel model = new MainWindow.SnipersTableModel();
+    private final SnipersTableModel model = new SnipersTableModel();
 
     @Before
     public void attachModelListener() {
@@ -42,12 +40,12 @@ public class SnipersTableModelTest {
             one(listener).tableChanged(with(aRowChangedEvent()));
         }});
 
-        model.sniperStatusChanged(new SniperSnapshot("item id", 555, 666, SniperState.BIDDING));
+        model.sniperStatusChanged(new SniperSnapshot("item id", 555, 666, BIDDING));
 
         assertColumnEquals(Column.ITEM_IDENTIFIER, "item id");
         assertColumnEquals(Column.LAST_PRICE, 555);
         assertColumnEquals(Column.LAST_BID, 666);
-        assertColumnEquals(Column.SNIPER_STATE, MainWindow.STATUS_BIDDING);
+        assertColumnEquals(Column.SNIPER_STATE, SnipersTableModel.textFor(BIDDING));
     }
 
     private void assertColumnEquals(Column column, Object expected) {
