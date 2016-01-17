@@ -11,9 +11,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class Main{
-    public static final String STATUS_JOINING = "Joining";
-    public static final String MAIN_WINDOW_NAME = "Auction Sniper Main";
-
     private static final int ARG_HOSTNAME = 0;
     private static final int ARG_USERNAME = 1;
     private static final int ARG_PASSWORD = 2;

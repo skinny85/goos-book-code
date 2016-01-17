@@ -6,11 +6,11 @@ import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.awt.*;
 
-import static auctionsniper.Main.STATUS_JOINING;
 import static auctionsniper.SniperState.BIDDING;
 
 public class MainWindow extends JFrame {
     public static final String MAIN_WINDOW_NAME = "Auction Sniper Main";
+    public static final String STATUS_JOINING = "Joining";
     private static final String SNIPERS_TABLE_NAME = "Snipers Table";
     public static final String STATUS_LOST = "Lost";
     public static final String STATUS_BIDDING = "Bidding";
