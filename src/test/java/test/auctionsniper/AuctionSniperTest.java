@@ -12,6 +12,8 @@ import org.jmock.integration.junit4.JMock;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static auctionsniper.SniperState.BIDDING;
+
 @RunWith(JMock.class)
 public class AuctionSniperTest {
     private static final String ITEM_ID = "item-id";
@@ -40,7 +42,7 @@ public class AuctionSniperTest {
 
         context.checking(new Expectations() {{
             one(auction).bid(bid);
-            atLeast(1).of(sniperListener).sniperBidding(new SniperSnapshot(ITEM_ID, price, bid));
+            atLeast(1).of(sniperListener).sniperBidding(new SniperSnapshot(ITEM_ID, price, bid, BIDDING));
         }});
 
         sniper.currentPrice(price, increment, PriceSource.FromOtherBidder);
