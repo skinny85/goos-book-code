@@ -90,7 +90,7 @@ public class Main{
         public void sniperStateChanged(final SniperSnapshot state) {
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
-                    ui.sniperStatusChanged(state, MainWindow.STATUS_BIDDING);
+                    ui.sniperStatusChanged(state);
                 }
             });
         }
