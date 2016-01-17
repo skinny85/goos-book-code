@@ -1,5 +1,7 @@
 package auctionsniper.ui;
 
+import auctionsniper.SniperState;
+
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.awt.*;
@@ -29,6 +31,10 @@ public class MainWindow extends JFrame {
         snipers.setStatusText(statusText);
     }
 
+    public void sniperStatusChanged(SniperState sniperState, String statusText) {
+        snipers.sniperStatusChanged(sniperState, statusText);
+    }
+
     private JTable makeSnipersTable() {
         final JTable snipersTable = new JTable(snipers);
         snipersTable.setName(SNIPERS_TABLE_NAME);
@@ -41,12 +47,16 @@ public class MainWindow extends JFrame {
         contentPane.add(new JScrollPane(snipersTable), BorderLayout.CENTER);
     }
 
-    public class SnipersTableModel extends AbstractTableModel {
+    public static class SnipersTableModel extends AbstractTableModel {
         private String statusText = STATUS_JOINING;
 
         public void setStatusText(String newStatusText) {
             statusText = newStatusText;
             fireTableRowsUpdated(0, 0);
+        }
+
+        public void sniperStatusChanged(SniperState sniperState, String statusText) {
+            throw new UnsupportedOperationException();
         }
 
         public int getColumnCount() {
