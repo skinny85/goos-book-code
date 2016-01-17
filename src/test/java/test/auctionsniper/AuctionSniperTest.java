@@ -5,6 +5,9 @@ import auctionsniper.AuctionEventListener.PriceSource;
 import auctionsniper.AuctionSniper;
 import auctionsniper.SniperListener;
 import auctionsniper.SniperSnapshot;
+import auctionsniper.SniperState;
+import org.hamcrest.FeatureMatcher;
+import org.hamcrest.Matcher;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.States;
@@ -13,6 +16,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static auctionsniper.SniperState.BIDDING;
+import static org.hamcrest.Matchers.equalTo;
 
 @RunWith(JMock.class)
 public class AuctionSniperTest {
@@ -60,7 +64,7 @@ public class AuctionSniperTest {
     public void reportsLostIfAuctionClosesWhenBidding() {
         context.checking(new Expectations() {{
             ignoring(auction);
-            allowing(sniperListener).sniperStateChanged(with(any(SniperSnapshot.class))); then(sniperState.is("bidding"));
+            allowing(sniperListener).sniperStateChanged(with(aSniperThatIs(BIDDING))); then(sniperState.is("bidding"));
             atLeast(1).of(sniperListener).sniperLost(); when(sniperState.is("bidding"));
         }});
 
@@ -78,5 +82,15 @@ public class AuctionSniperTest {
 
         sniper.currentPrice(123, 45, PriceSource.FromSniper);
         sniper.auctionClosed();
+    }
+
+    private Matcher<SniperSnapshot> aSniperThatIs(final SniperState state) {
+        return new FeatureMatcher<SniperSnapshot, SniperState>(
+                equalTo(state), "sniper that is ", "was") {
+            @Override
+            protected SniperState featureValueOf(SniperSnapshot actual) {
+                return actual.state;
+            }
+        };
     }
 }
