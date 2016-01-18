@@ -7,6 +7,8 @@ import auctionsniper.SniperState;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static auctionsniper.SniperState.JOINING;
 
@@ -43,15 +45,17 @@ public class MainWindow extends JFrame {
         private static String[] STATUS_TEXT = {"Joining", "Bidding", "Winning", "Lost", "Won"};
         private final static SniperSnapshot STARTING_UP = new SniperSnapshot("", 0, 0, JOINING);
 
-        private SniperSnapshot sniperSnapshot = STARTING_UP;
+        private List<SniperSnapshot> snapshots = new ArrayList<SniperSnapshot>();
 
         public void addSniper(SniperSnapshot snapshot) {
-            throw new UnsupportedOperationException();
+            int row = snapshots.size();
+            snapshots.add(snapshot);
+            fireTableRowsInserted(row, row);
         }
 
         @Override
         public void sniperStateChanged(SniperSnapshot newSniperSnapshot) {
-            sniperSnapshot = newSniperSnapshot;
+            snapshots.set(0, newSniperSnapshot);
             fireTableRowsUpdated(0, 0);
         }
 
@@ -60,11 +64,11 @@ public class MainWindow extends JFrame {
         }
 
         public int getRowCount() {
-            return 1;
+            return snapshots.size();
         }
 
         public Object getValueAt(int rowIndex, int columnIndex) {
-            return Column.at(columnIndex).valueIn(sniperSnapshot);
+            return Column.at(columnIndex).valueIn(snapshots.get(rowIndex));
         }
 
         @Override
