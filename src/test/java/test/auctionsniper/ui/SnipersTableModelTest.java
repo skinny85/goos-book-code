@@ -1,8 +1,10 @@
 package test.auctionsniper.ui;
 
 import auctionsniper.SniperSnapshot;
+import auctionsniper.SniperState;
 import auctionsniper.ui.Column;
 import auctionsniper.ui.MainWindow.SnipersTableModel;
+import auctionsniper.util.Defect;
 import org.hamcrest.Matcher;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
@@ -14,7 +16,6 @@ import org.junit.runner.RunWith;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import static auctionsniper.SniperState.BIDDING;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
@@ -71,6 +72,44 @@ public class SnipersTableModelTest {
 
         assertEquals(1, model.getRowCount());
         assertRowMatchesSnapshot(0, joining);
+    }
+
+    @Test
+    public void holdsSnipersInAdditionOrder() {
+        context.checking(new Expectations() { {
+            ignoring(listener);
+        }});
+
+        model.addSniper(SniperSnapshot.joining("item 0"));
+        model.addSniper(SniperSnapshot.joining("item 1"));
+
+        assertEquals("item 0", cellValue(0, Column.ITEM_IDENTIFIER));
+        assertEquals("item 1", cellValue(1, Column.ITEM_IDENTIFIER));
+    }
+
+    @Test
+    public void updatesCorrectRowForSniper() {
+        SniperSnapshot joining1 = SniperSnapshot.joining("item id");
+        SniperSnapshot joining2 = SniperSnapshot.joining("another item id");
+        SniperSnapshot bidding = joining2.bidding(555, 666);
+
+        context.checking(new Expectations() { {
+            allowing(listener).tableChanged(with(anyInsertionEvent()));
+
+            one(listener).tableChanged(with(aChangeInRow(1)));
+        }});
+
+        model.addSniper(joining1);
+        model.addSniper(joining2);
+
+        model.sniperStateChanged(bidding);
+
+        assertRowMatchesSnapshot(1, bidding);
+    }
+
+    @Test(expected = Defect.class)
+    public void throwsDefectIfNoExistingSniperForAnUpdate() {
+        model.sniperStateChanged(new SniperSnapshot("item 1", 123, 234, SniperState.WINNING));
     }
 
     private Matcher<TableModelEvent> anyInsertionEvent() {
