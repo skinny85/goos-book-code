@@ -71,5 +71,9 @@ public class MainWindow extends JFrame {
         public static String textFor(SniperState state) {
             return STATUS_TEXT[state.ordinal()];
         }
+
+        public void addSniper(SniperSnapshot snapshot) {
+            throw new UnsupportedOperationException();
+        }
     }
 }
