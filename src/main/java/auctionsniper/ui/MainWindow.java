@@ -3,6 +3,7 @@ package auctionsniper.ui;
 import auctionsniper.SniperListener;
 import auctionsniper.SniperSnapshot;
 import auctionsniper.SniperState;
+import auctionsniper.util.Defect;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
@@ -55,8 +56,9 @@ public class MainWindow extends JFrame {
 
         @Override
         public void sniperStateChanged(SniperSnapshot newSniperSnapshot) {
-            snapshots.set(0, newSniperSnapshot);
-            fireTableRowsUpdated(0, 0);
+            int row = rowMatching(newSniperSnapshot);
+            snapshots.set(row, newSniperSnapshot);
+            fireTableRowsUpdated(row, row);
         }
 
         public int getColumnCount() {
@@ -78,6 +80,15 @@ public class MainWindow extends JFrame {
 
         public static String textFor(SniperState state) {
             return STATUS_TEXT[state.ordinal()];
+        }
+
+        private int rowMatching(SniperSnapshot newSnapshot) {
+            for (int i = 0; i < snapshots.size(); i++) {
+                if (newSnapshot.isForSameItemAs(snapshots.get(i))) {
+                    return i;
+                }
+            }
+            throw new Defect("Cannot find match for " + newSnapshot);
         }
     }
 }
