@@ -45,6 +45,10 @@ public class MainWindow extends JFrame {
 
         private SniperSnapshot sniperSnapshot = STARTING_UP;
 
+        public void addSniper(SniperSnapshot snapshot) {
+            throw new UnsupportedOperationException();
+        }
+
         @Override
         public void sniperStateChanged(SniperSnapshot newSniperSnapshot) {
             sniperSnapshot = newSniperSnapshot;
@@ -70,10 +74,6 @@ public class MainWindow extends JFrame {
 
         public static String textFor(SniperState state) {
             return STATUS_TEXT[state.ordinal()];
-        }
-
-        public void addSniper(SniperSnapshot snapshot) {
-            throw new UnsupportedOperationException();
         }
     }
 }
