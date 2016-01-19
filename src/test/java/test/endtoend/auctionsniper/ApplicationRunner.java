@@ -2,7 +2,7 @@ package test.endtoend.auctionsniper;
 
 import auctionsniper.Main;
 import auctionsniper.ui.MainWindow;
-import auctionsniper.ui.MainWindow.SnipersTableModel;
+import auctionsniper.ui.SnipersTableModel;
 
 import static auctionsniper.SniperState.*;
 import static test.endtoend.auctionsniper.FakeAuctionServer.XMPP_HOSTNAME;

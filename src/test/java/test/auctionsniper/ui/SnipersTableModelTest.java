@@ -3,7 +3,7 @@ package test.auctionsniper.ui;
 import auctionsniper.SniperSnapshot;
 import auctionsniper.SniperState;
 import auctionsniper.ui.Column;
-import auctionsniper.ui.MainWindow.SnipersTableModel;
+import auctionsniper.ui.SnipersTableModel;
 import auctionsniper.util.Defect;
 import org.hamcrest.Matcher;
 import org.jmock.Expectations;
