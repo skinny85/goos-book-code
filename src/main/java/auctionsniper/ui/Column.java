@@ -1,7 +1,6 @@
 package auctionsniper.ui;
 
 import auctionsniper.SniperSnapshot;
-import auctionsniper.ui.MainWindow.SnipersTableModel;
 
 public enum Column {
     ITEM_IDENTIFIER("Item") {
