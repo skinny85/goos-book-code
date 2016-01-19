@@ -1,5 +1,7 @@
 package auctionsniper.ui;
 
+import auctionsniper.UserRequestListener;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -47,4 +49,6 @@ public class MainWindow extends JFrame {
         contentPane.add(new JScrollPane(snipersTable), BorderLayout.CENTER);
     }
 
+    public void addUserRequestListener(UserRequestListener userRequestListener) {
+    }
 }
