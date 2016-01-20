@@ -2,6 +2,7 @@ package auctionsniper;
 
 import auctionsniper.ui.MainWindow;
 import auctionsniper.ui.SnipersTableModel;
+import auctionsniper.util.Announcer;
 import auctionsniper.xmpp.XMPPAuction;
 import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.XMPPConnection;
@@ -71,16 +72,16 @@ public class Main{
                 Chat chat = connection.getChatManager()
                         .createChat(auctionId(itemId, connection), null);
 
+                Announcer<AuctionEventListener> auctionEventListeners = Announcer.to(AuctionEventListener.class);
+                chat.addMessageListener(new AuctionMessageTranslator(
+                        connection.getUser(),
+                        auctionEventListeners.announce()));
                 notToBeGCd.add(chat);
 
                 Auction auction = new XMPPAuction(chat);
-                chat.addMessageListener(
-                        new AuctionMessageTranslator(
-                                connection.getUser(),
-                                new AuctionSniper(
-                                        auction,
-                                        new SwingThreadSniperListener(snipers),
-                                        itemId)));
+                auctionEventListeners.addListener(
+                        new AuctionSniper(auction, new SwingThreadSniperListener(snipers), itemId));
+
                 auction.join();
             }
         });
