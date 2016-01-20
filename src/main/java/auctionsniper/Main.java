@@ -74,14 +74,6 @@ public class Main{
         });
     }
 
-    private void safelyAddItemToModel(final String itemId) throws Exception {
-        SwingUtilities.invokeAndWait(new Runnable() {
-            public void run() {
-                snipers.addSniper(SniperSnapshot.joining(itemId));
-            }
-        });
-    }
-
     private void disconnectWhenUICloses(final XMPPConnection connection) {
         ui.addWindowListener(new WindowAdapter() {
             @Override
