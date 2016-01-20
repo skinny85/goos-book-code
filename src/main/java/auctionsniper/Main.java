@@ -2,9 +2,7 @@ package auctionsniper;
 
 import auctionsniper.ui.MainWindow;
 import auctionsniper.ui.SnipersTableModel;
-import auctionsniper.util.Announcer;
 import auctionsniper.xmpp.XMPPAuction;
-import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
 
@@ -41,15 +39,10 @@ public class Main{
         return connection;
     }
 
-    private static String auctionId(String itemId, XMPPConnection connection) {
-        return String.format(AUCTION_ID_FORMAT, itemId,
-                connection.getServiceName());
-    }
-
     private final SnipersTableModel snipers = new SnipersTableModel();
 
     private MainWindow ui;
-    private List<Chat> notToBeGCd = new ArrayList<Chat>();
+    private List<Auction> notToBeGCd = new ArrayList<Auction>();
 
     public Main() throws Exception {
         startUserInterface();
@@ -69,19 +62,13 @@ public class Main{
             public void joinAuction(String itemId) {
                 snipers.addSniper(SniperSnapshot.joining(itemId));
 
-                Chat chat = connection.getChatManager()
-                        .createChat(auctionId(itemId, connection), null);
-
-                Announcer<AuctionEventListener> auctionEventListeners = Announcer.to(AuctionEventListener.class);
-                chat.addMessageListener(new AuctionMessageTranslator(
-                        connection.getUser(),
-                        auctionEventListeners.announce()));
-                notToBeGCd.add(chat);
-
-                Auction auction = new XMPPAuction(chat);
-                auctionEventListeners.addListener(
-                        new AuctionSniper(auction, new SwingThreadSniperListener(snipers), itemId));
-
+                Auction auction = new XMPPAuction(connection, itemId);
+                notToBeGCd.add(auction);
+                auction.addAuctionEventListener(
+                        new AuctionSniper(
+                                auction,
+                                new SwingThreadSniperListener(snipers),
+                                itemId));
                 auction.join();
             }
         });
