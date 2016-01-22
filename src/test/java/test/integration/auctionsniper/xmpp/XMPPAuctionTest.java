@@ -1,4 +1,4 @@
-package test.integration.auctionsniper.ui;
+package test.integration.auctionsniper.xmpp;
 
 import auctionsniper.Auction;
 import auctionsniper.AuctionEventListener;
