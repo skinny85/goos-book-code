@@ -2,8 +2,8 @@ package auctionsniper.ui;
 
 import auctionsniper.AuctionSniper;
 import auctionsniper.Main.SwingThreadSniperListener;
-import auctionsniper.SniperCollector;
 import auctionsniper.SniperListener;
+import auctionsniper.SniperPortfolio.PortfolioListener;
 import auctionsniper.SniperSnapshot;
 import auctionsniper.SniperState;
 import auctionsniper.util.Defect;
@@ -13,17 +13,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SnipersTableModel extends AbstractTableModel implements
-        SniperListener, SniperCollector {
+        SniperListener, PortfolioListener {
     private static String[] STATUS_TEXT = {"Joining", "Bidding", "Winning", "Lost", "Won"};
 
     private List<SniperSnapshot> snapshots = new ArrayList<SniperSnapshot>();
-    private final ArrayList<AuctionSniper> notToBeGCd = new ArrayList<AuctionSniper>();
 
     @Override
-    public void addSniper(AuctionSniper sniper) {
-        notToBeGCd.add(sniper);
-        addSniperSnapshot(sniper.getSnapshot());
+    public void sniperAdded(AuctionSniper sniper) {
         sniper.addSniperListener(new SwingThreadSniperListener(this));
+        addSniperSnapshot(sniper.getSnapshot());
     }
 
     private void addSniperSnapshot(SniperSnapshot snapshot) {
