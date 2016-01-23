@@ -1,7 +1,6 @@
 package auctionsniper.ui;
 
 import auctionsniper.AuctionSniper;
-import auctionsniper.Main.SwingThreadSniperListener;
 import auctionsniper.SniperListener;
 import auctionsniper.SniperPortfolio.PortfolioListener;
 import auctionsniper.SniperSnapshot;
