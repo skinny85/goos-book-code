@@ -27,7 +27,6 @@ public class Main{
     private final SnipersTableModel snipers = new SnipersTableModel();
 
     private MainWindow ui;
-    private List<Auction> notToBeGCd = new ArrayList<Auction>();
 
     public Main() throws Exception {
         startUserInterface();
@@ -42,21 +41,7 @@ public class Main{
     }
 
     private void addRequestListenerFor(final AuctionHouse auctionHouse) {
-        ui.addUserRequestListener(new UserRequestListener() {
-            @Override
-            public void joinAuction(String itemId) {
-                snipers.addSniper(SniperSnapshot.joining(itemId));
-
-                Auction auction = auctionHouse.auctionFor(itemId);
-                notToBeGCd.add(auction);
-                auction.addAuctionEventListener(
-                        new AuctionSniper(
-                                auction,
-                                new SwingThreadSniperListener(snipers),
-                                itemId));
-                auction.join();
-            }
-        });
+        ui.addUserRequestListener(new SniperLauncher(auctionHouse, snipers));
     }
 
     private void disconnectWhenUICloses(final XMPPAuctionHouse xmppAuctionHouse) {
@@ -68,7 +53,7 @@ public class Main{
         });
     }
 
-    public class SwingThreadSniperListener implements SniperListener {
+    public static class SwingThreadSniperListener implements SniperListener {
         private final SniperListener sniperListener;
 
         public SwingThreadSniperListener(SniperListener sniperListener) {
