@@ -7,8 +7,6 @@ import auctionsniper.xmpp.XMPPAuctionHouse;
 import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Main{
     private static final int ARG_HOSTNAME = 0;

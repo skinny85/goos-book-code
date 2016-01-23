@@ -1,5 +1,7 @@
 package auctionsniper.ui;
 
+import auctionsniper.AuctionSniper;
+import auctionsniper.SniperCollector;
 import auctionsniper.SniperListener;
 import auctionsniper.SniperSnapshot;
 import auctionsniper.SniperState;
@@ -11,7 +13,8 @@ import java.util.List;
 
 import static auctionsniper.SniperState.JOINING;
 
-public class SnipersTableModel extends AbstractTableModel implements SniperListener {
+public class SnipersTableModel extends AbstractTableModel implements
+        SniperListener, SniperCollector {
     private static String[] STATUS_TEXT = {"Joining", "Bidding", "Winning", "Lost", "Won"};
     private final static SniperSnapshot STARTING_UP = new SniperSnapshot("", 0, 0, JOINING);
 
@@ -21,6 +24,10 @@ public class SnipersTableModel extends AbstractTableModel implements SniperListe
         int row = snapshots.size();
         snapshots.add(snapshot);
         fireTableRowsInserted(row, row);
+    }
+
+    @Override
+    public void addSniper(AuctionSniper sniper) {
     }
 
     @Override
