@@ -3,6 +3,7 @@ package auctionsniper;
 import auctionsniper.ui.MainWindow;
 import auctionsniper.ui.SnipersTableModel;
 import auctionsniper.xmpp.XMPPAuction;
+import auctionsniper.xmpp.XMPPAuctionHouse;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
 
@@ -26,9 +27,11 @@ public class Main{
 
     public static void main(String... args) throws Exception {
         Main main = new Main();
-        XMPPConnection connection = connection(args[ARG_HOSTNAME], args[ARG_USERNAME], args[ARG_PASSWORD]);
-        main.disconnectWhenUICloses(connection);
-        main.addRequestListenerFor(connection);
+        XMPPAuctionHouse auctionHouse =
+                XMPPAuctionHouse.connect(
+                        args[ARG_HOSTNAME], args[ARG_USERNAME], args[ARG_PASSWORD]);
+        main.disconnectWhenUICloses(auctionHouse);
+        main.addRequestListenerFor(auctionHouse);
     }
 
     private static XMPPConnection connection(String hostname, String username, String password)
@@ -56,13 +59,13 @@ public class Main{
         });
     }
 
-    private void addRequestListenerFor(final XMPPConnection connection) {
+    private void addRequestListenerFor(final AuctionHouse auctionHouse) {
         ui.addUserRequestListener(new UserRequestListener() {
             @Override
             public void joinAuction(String itemId) {
                 snipers.addSniper(SniperSnapshot.joining(itemId));
 
-                Auction auction = new XMPPAuction(connection, itemId);
+                Auction auction = auctionHouse.auctionFor(itemId);
                 notToBeGCd.add(auction);
                 auction.addAuctionEventListener(
                         new AuctionSniper(
@@ -74,11 +77,11 @@ public class Main{
         });
     }
 
-    private void disconnectWhenUICloses(final XMPPConnection connection) {
+    private void disconnectWhenUICloses(final XMPPAuctionHouse xmppAuctionHouse) {
         ui.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
-                connection.disconnect();
+                xmppAuctionHouse.disconnect();
             }
         });
     }
