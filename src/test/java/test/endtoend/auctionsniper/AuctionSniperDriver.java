@@ -37,8 +37,7 @@ public class AuctionSniperDriver extends JFrameDriver {
 
     @SuppressWarnings("unchecked")
     public void startBiddingFor(String itemId) {
-        itemIdField().replaceAllText(itemId);
-        bidButton().click();
+        startBiddingFor(itemId, Integer.MAX_VALUE);
     }
 
     public void startBiddingFor(String itemId, int stopPrice) {
