@@ -1,6 +1,7 @@
 package test.auctionsniper.ui;
 
 import auctionsniper.AuctionSniper;
+import auctionsniper.Item;
 import auctionsniper.SniperSnapshot;
 import auctionsniper.SniperState;
 import auctionsniper.ui.Column;
@@ -22,10 +23,12 @@ import static org.junit.Assert.*;
 
 @RunWith(JMock.class)
 public class SnipersTableModelTest {
+    private static final String ITEM_ID = "item 0";
+
     private final Mockery context = new Mockery();
     private TableModelListener listener = context.mock(TableModelListener.class);
     private final SnipersTableModel model = new SnipersTableModel();
-    private final AuctionSniper sniper = new AuctionSniper("item 0", null);
+    private final AuctionSniper sniper = new AuctionSniper(new Item(ITEM_ID, 234), null);
 
     @Before
     public void attachModelListener() {
@@ -76,7 +79,7 @@ public class SnipersTableModelTest {
 
     @Test
     public void holdsSnipersInAdditionOrder() {
-        AuctionSniper sniper2 = new AuctionSniper("item 1", null);
+        AuctionSniper sniper2 = new AuctionSniper(new Item("item 1", 345), null);
         context.checking(new Expectations() { {
             ignoring(listener);
         }});
@@ -90,7 +93,7 @@ public class SnipersTableModelTest {
 
     @Test
     public void updatesCorrectRowForSniper() {
-        AuctionSniper sniper2 = new AuctionSniper("item 1", null);
+        AuctionSniper sniper2 = new AuctionSniper(new Item("item 1", 345), null);
         context.checking(new Expectations() { {
             allowing(listener).tableChanged(with(anyInsertionEvent()));
 

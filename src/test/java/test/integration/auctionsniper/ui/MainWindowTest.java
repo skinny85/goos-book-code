@@ -20,7 +20,7 @@ public class MainWindowTest {
         final ValueMatcherProbe<Item> itemProbe =
                 new ValueMatcherProbe<Item>(equalTo(new Item("some item-id", 789)), "join request");
         mainWindow.addUserRequestListener(new UserRequestListener() {
-                    public void joinAuction(String itemId, Item item) {
+                    public void joinAuction(Item item) {
                         itemProbe.setReceivedValue(item);
                     }
                 });
