@@ -1,5 +1,6 @@
 package test.integration.auctionsniper.ui;
 
+import auctionsniper.Item;
 import auctionsniper.SniperPortfolio;
 import auctionsniper.UserRequestListener;
 import auctionsniper.ui.MainWindow;
@@ -16,14 +17,14 @@ public class MainWindowTest {
 
     @Test
     public void makesUserRequestWhenJoinButtonClicked() {
-        final ValueMatcherProbe<String> buttonProbe =
-                new ValueMatcherProbe<String>(equalTo("some item-id"), "join request");
+        final ValueMatcherProbe<Item> itemProbe =
+                new ValueMatcherProbe<Item>(equalTo(new Item("some item-id", 789)), "join request");
         mainWindow.addUserRequestListener(new UserRequestListener() {
-                    public void joinAuction(String itemId) {
-                        buttonProbe.setReceivedValue(itemId);
+                    public void joinAuction(String itemId, Item item) {
+                        itemProbe.setReceivedValue(item);
                     }
                 });
-        driver.startBiddingFor("some item-id");
-        driver.check(buttonProbe);
+        driver.startBiddingFor("some item-id", 789);
+        driver.check(itemProbe);
     }
 }
