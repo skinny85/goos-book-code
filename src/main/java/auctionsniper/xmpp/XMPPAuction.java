@@ -3,6 +3,7 @@ package auctionsniper.xmpp;
 import auctionsniper.Auction;
 import auctionsniper.AuctionEventListener;
 import auctionsniper.AuctionMessageTranslator;
+import auctionsniper.Item;
 import auctionsniper.util.Announcer;
 import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.XMPPConnection;
@@ -17,9 +18,9 @@ public class XMPPAuction implements Auction {
     private final Announcer<AuctionEventListener> auctionEventListeners = Announcer.to(AuctionEventListener.class);
     private final Chat chat;
 
-    public XMPPAuction(XMPPConnection connection, String itemId) {
+    public XMPPAuction(XMPPConnection connection, Item item) {
         chat = connection.getChatManager().createChat(
-                auctionId(itemId, connection),
+                auctionId(item.identifier, connection),
                 new AuctionMessageTranslator(
                         connection.getUser(),
                         auctionEventListeners.announce()));

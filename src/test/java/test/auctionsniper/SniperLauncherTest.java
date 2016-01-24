@@ -3,6 +3,7 @@ package test.auctionsniper;
 import auctionsniper.Auction;
 import auctionsniper.AuctionHouse;
 import auctionsniper.AuctionSniper;
+import auctionsniper.Item;
 import auctionsniper.SniperCollector;
 import auctionsniper.SniperLauncher;
 import org.hamcrest.FeatureMatcher;
@@ -27,23 +28,23 @@ public class SniperLauncherTest {
 
     @Test
     public void addsNewSniperToCollectorAndThenJoinsAuction() {
-        final String itemId = "item 123";
+        final Item item = new Item("item 123", 456);
 
         context.checking(new Expectations() {{
-            allowing(auctionHouse).auctionFor(itemId);
+            allowing(auctionHouse).auctionFor(with(any(Item.class)));
             will(returnValue(auction));
 
-            oneOf(auction).addAuctionEventListener(with(sniperForItem(itemId))); when(auctionState.is("not joined"));
-            oneOf(sniperCollector).addSniper(with(sniperForItem(itemId))); when(auctionState.is("not joined"));
+            oneOf(auction).addAuctionEventListener(with(sniperForItem(item))); when(auctionState.is("not joined"));
+            oneOf(sniperCollector).addSniper(with(sniperForItem(item))); when(auctionState.is("not joined"));
 
             one(auction).join(); then(auctionState.is("joined"));
         }});
 
-        launcher.joinAuction(itemId, null);
+        launcher.joinAuction(item);
     }
 
-    protected Matcher<AuctionSniper> sniperForItem(String itemId) {
-        return new FeatureMatcher<AuctionSniper, String>(equalTo(itemId), "sniper with itemId id", "itemId") {
+    protected Matcher<AuctionSniper> sniperForItem(Item item) {
+        return new FeatureMatcher<AuctionSniper, String>(equalTo(item.identifier), "sniper with itemId id", "itemId") {
             @Override
             protected String featureValueOf(AuctionSniper actual) {
                 return actual.getSnapshot().itemId;
