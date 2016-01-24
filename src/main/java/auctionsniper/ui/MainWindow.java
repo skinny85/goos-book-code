@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
 
 public class MainWindow extends JFrame {
     public static final String APPLICATION_TITLE = "Auction Sniper";
@@ -31,10 +32,16 @@ public class MainWindow extends JFrame {
 
     private JPanel makeControls() {
         JPanel controls = new JPanel(new FlowLayout());
+
         final JTextField itemIdField = new JTextField();
         itemIdField.setColumns(25);
         itemIdField.setName(NEW_ITEM_ID_NAME);
         controls.add(itemIdField);
+
+        JFormattedTextField stopPriceField = new JFormattedTextField(NumberFormat.getIntegerInstance());
+        stopPriceField.setColumns(7);
+        stopPriceField.setName(NEW_ITEM_STOP_PRICE_NAME);
+        controls.add(stopPriceField);
 
         JButton joinAuctionButton = new JButton("Join Auction");
         joinAuctionButton.setName(JOIN_BUTTON_NAME);
