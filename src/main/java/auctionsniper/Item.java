@@ -26,4 +26,8 @@ public class Item {
     public String toString() {
         return "Item: " + identifier + ", stop price: " + stopPrice;
     }
+
+    public boolean allows(int bid) {
+        return bid <= stopPrice;
+    }
 }
