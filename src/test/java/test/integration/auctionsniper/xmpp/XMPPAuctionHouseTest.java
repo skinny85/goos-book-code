@@ -3,9 +3,7 @@ package test.integration.auctionsniper.xmpp;
 import auctionsniper.Auction;
 import auctionsniper.AuctionEventListener;
 import auctionsniper.Item;
-import auctionsniper.Main;
 import auctionsniper.xmpp.XMPPAuctionHouse;
-import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
 import org.junit.After;
 import org.junit.Before;
@@ -16,14 +14,14 @@ import test.endtoend.auctionsniper.FakeAuctionServer;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 public class XMPPAuctionHouseTest {
     private final FakeAuctionServer auctionServer = new FakeAuctionServer("item-54321");
     private XMPPAuctionHouse auctionHouse;
 
     @Before
-    public void createConnection() throws XMPPException {
+    public void createConnection() throws Exception {
         auctionHouse = XMPPAuctionHouse.connect(FakeAuctionServer.XMPP_HOSTNAME, ApplicationRunner.SNIPER_ID, ApplicationRunner.SNIPER_PASSWORD);
     }
 
