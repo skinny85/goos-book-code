@@ -18,6 +18,7 @@ public class ApplicationRunner {
     public static final String SNIPER_XMPP_ID = "sniper@localhost/Auction";
 
     private AuctionSniperDriver driver;
+    private AuctionLogDriver logDriver = new AuctionLogDriver();
 
     public void startBiddingIn(final FakeAuctionServer... auctions) {
         startSniper();
@@ -38,6 +39,8 @@ public class ApplicationRunner {
     }
 
     private void startSniper() {
+        logDriver.clearLog();
+
         Thread thread = new Thread("Test Application") {
             @Override
             public void run() {
@@ -85,6 +88,7 @@ public class ApplicationRunner {
     }
 
     public void reportsInvalidMessage(FakeAuctionServer auction, String brokenMessage) throws IOException {
+        logDriver.hasEntry(containsString(brokenMessage));
     }
 
     public void stop() {
