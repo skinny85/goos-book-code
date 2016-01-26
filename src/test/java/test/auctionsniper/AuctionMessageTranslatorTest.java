@@ -23,7 +23,7 @@ public class AuctionMessageTranslatorTest {
             context.mock(AuctionEventListener.class);
     private final XMPPFailureReporter failureReporter = context.mock(XMPPFailureReporter.class);
     private final AuctionMessageTranslator translator =
-            new AuctionMessageTranslator(SNIPER_ID, listener);
+            new AuctionMessageTranslator(SNIPER_ID, listener, failureReporter);
 
     @Test
     public void notifiesAuctionClosedWhenCloseMessageReceived() {
@@ -73,15 +73,12 @@ public class AuctionMessageTranslatorTest {
 
     @Test
     public void notifiesAuctionFailedWhenEventTypeMissing() {
-        context.checking(new Expectations() {{
-            exactly(1).of(listener).auctionFailed();
-        }});
+        String badMessage = "SOLVersion: 1.1; CurrentPrice: 234; Increment: 5; Bidder: "
+                + SNIPER_ID + ";";
 
-        Message message = new Message();
-        message.setBody("SOLVersion: 1.1; CurrentPrice: 234; Increment: 5; Bidder: "
-                + SNIPER_ID + ";");
+        expectFailureWithMessage(badMessage);
 
-        translator.processMessage(UNUSED_CHAT, message);
+        translator.processMessage(UNUSED_CHAT, message(badMessage));
     }
 
     private void expectFailureWithMessage(final String badMessage) {
