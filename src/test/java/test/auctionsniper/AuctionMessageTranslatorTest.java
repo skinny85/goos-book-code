@@ -3,6 +3,7 @@ package test.auctionsniper;
 import auctionsniper.AuctionEventListener;
 import auctionsniper.AuctionEventListener.PriceSource;
 import auctionsniper.AuctionMessageTranslator;
+import auctionsniper.xmpp.XMPPFailureReporter;
 import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.packet.Message;
 import org.jmock.Expectations;
@@ -20,6 +21,7 @@ public class AuctionMessageTranslatorTest {
     private final Mockery context = new Mockery();
     private final AuctionEventListener listener =
             context.mock(AuctionEventListener.class);
+    private final XMPPFailureReporter failureReporter = context.mock(XMPPFailureReporter.class);
     private final AuctionMessageTranslator translator =
             new AuctionMessageTranslator(SNIPER_ID, listener);
 
@@ -62,14 +64,11 @@ public class AuctionMessageTranslatorTest {
 
     @Test
     public void notifiesAuctionFailedWhenBadMessageReceived() {
-        context.checking(new Expectations() {{
-            exactly(1).of(listener).auctionFailed();
-        }});
+        String badMessage = "a bad message";
 
-        Message message = new Message();
-        message.setBody("a bad message");
+        expectFailureWithMessage(badMessage);
 
-        translator.processMessage(UNUSED_CHAT, message);
+        translator.processMessage(UNUSED_CHAT, message(badMessage));
     }
 
     @Test
@@ -83,5 +82,20 @@ public class AuctionMessageTranslatorTest {
                 + SNIPER_ID + ";");
 
         translator.processMessage(UNUSED_CHAT, message);
+    }
+
+    private void expectFailureWithMessage(final String badMessage) {
+        context.checking(new Expectations() {{
+            oneOf(listener).auctionFailed();
+            oneOf(failureReporter).cannotTranslateMessage(
+                    with(SNIPER_ID), with(badMessage),
+                    with(any(Exception.class)));
+        }});
+    }
+
+    private Message message(String body) {
+        Message message = new Message();
+        message.setBody(body);
+        return message;
     }
 }
