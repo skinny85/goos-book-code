@@ -1,6 +1,9 @@
 "Growing Object-Oriented Software, Guided by Tests" code walkthrough
 ====================================================================
 
+I've written a blog article introducing this project in more detail
+[here](http://endoflineblog.com/recreating-the-code-from-the-goos-book-example-project).
+
 While reading the book ["Growing Object-Oriented Software, Guided by
 Tests"](http://www.amazon.com/dp/0321503627) (awesome book, by the way -
 highly recommend it), I had trouble keeping up with the example
