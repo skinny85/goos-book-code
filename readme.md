@@ -25,7 +25,7 @@ the build system instead of Ant.
 Remember that for the end-to-end tests to pass, you need a running XMPP
 server listening on localhost:9090 (the book authors used Openfire version
 3.6, and so did I - all you need to do is download and unzip it, and then run
-`java -jar lib/startup.jar`) with the following users created:
+`java -jar startup.jar` in the `lib` directory) with the following users created:
 
 Username           | Password
 -------------------|---------
