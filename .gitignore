@@ -39,4 +39,4 @@ Thumbs.db
 *.bak
 
 # log files
-*.log
+*.log*
