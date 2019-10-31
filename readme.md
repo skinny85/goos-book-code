@@ -5,7 +5,7 @@ I've written a blog article introducing this project in more detail
 [here](http://endoflineblog.com/recreating-the-code-from-the-goos-book-example-project).
 
 While reading the book ["Growing Object-Oriented Software, Guided by
-Tests"](http://www.amazon.com/dp/0321503627) (awesome book, by the way -
+Tests"](https://www.amazon.com/gp/product/0321503627/ref=as_li_tl?ie=UTF8&tag=endoflineblog-20&camp=1789&creative=9325&linkCode=as2&creativeASIN=0321503627&linkId=ddfb1e4d66ed48d7afdb4063de0e7b32) (awesome book, by the way -
 highly recommend it), I had trouble keeping up with the example
 project being tested and coded in Part III. To help my understanding,
 I created this project, in which I copied the code in the book, which
